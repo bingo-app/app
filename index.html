@@ -1,0 +1,121 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+	body {
+		background-color: #222222;
+		color: white;
+		padding-left: 20px;
+	}
+	
+	#bingoTable td {
+		width: 100px;
+		height: 100px;
+		font-size: 64px;
+		text-align: center;
+		border-color: green;
+		border-width: 3px;
+		background-color: white;
+	}
+	
+	h1 {
+		padding-left: 190px;
+	}
+	
+	button {
+		margin-top: 10px;
+	}
+	
+	#bingoTable {
+		color: black;
+	}
+	
+	#pulledNumber {
+		font-size: 64px;
+	}
+	
+	.star {
+		color: #0000FF;
+	}
+</style>
+</head>
+<body>
+<h1>BINGO</h1>
+<table id="bingoTable" class="table-bordered">
+
+</table>
+<button onclick="pullRandom()">Pull random number</button>
+<div id="pulledNumber"></div>
+<script>
+var numbers = [];
+var numbers25 = [];
+
+function click(number) {
+	var tableCell = document.getElementById(number);
+	if (tableCell) {
+		tableCell.innerHTML = '★';
+		tableCell.classList.remove('star');
+		tableCell.classList.add('star');
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function pullRandom() {
+	var pulledNumberEl = document.getElementById('pulledNumber');
+	
+	if(numbers.length === 0) {
+		pulledNumberEl.innerHTML = 'Out of numbers';
+		return;
+	}
+	var number = numbers.pop();
+	
+	if(click(number)) {
+		pulledNumberEl.innerHTML = 'HIT! ' + number;
+	} else {
+		pulledNumberEl.innerHTML = 'MISS ' + number;
+	}
+}
+
+function scramble(array) {
+	for(var i=0; i < array.length; i++) {
+		var rnd = Math.floor(Math.random() * array.length);
+		var tmp = array[rnd];
+		array[rnd] = array[i];
+		array[i] = tmp;
+	}
+}
+
+function generate() {
+	for(var i=1; i <= 75; i++) {
+		numbers.push(i);
+	}
+	scramble(numbers);
+	for(var i=0; i < 25; i++) {
+		numbers25.push(numbers[i]);
+	}
+	scramble(numbers);
+	var table = document.getElementById('bingoTable');
+	var middle;
+	for(var i = 0; i < 5; i++) {
+		var row = document.createElement("tr");
+		for(var j = 0; j < 5; j++) {
+			var cell = document.createElement("td");
+			cell.innerHTML = numbers25[i * 5 + j];
+			cell.id = cell.innerHTML;
+			row.appendChild(cell);
+			if(i===2 && j===2) {
+				middle = cell.innerHTML;
+			}
+		}
+		table.appendChild(row);
+	}
+	click(middle);
+}  	
+generate();
+</script>
+</body>
+</html>
