@@ -41,6 +41,10 @@
 	.star {
 		color: #0000FF;
 	}
+	
+	.red {
+		color: #FF0000;
+	}
 </style>
 </head>
 <body>
@@ -64,8 +68,11 @@ function click(number) {
 	var tableCell = document.getElementById(number);
 	if (tableCell) {
 		tableCell.innerHTML = '★';
-		tableCell.classList.remove('star');
-		tableCell.classList.add('star');
+		tableCell.classList.add('red');
+		setTimeout(function() {
+			tableCell.classList.remove('red');
+			tableCell.classList.add('star');
+		}, 500);
 		return true;
 	} else {
 		return false;
@@ -122,6 +129,7 @@ function generate() {
 		table.appendChild(row);
 	}
 	click(middle);
+	numbers.splice(numbers.indexOf(+middle), 1);
 }  	
 generate();
 </script>
