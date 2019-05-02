@@ -11,17 +11,18 @@
 	}
 	
 	#bingoTable td {
-		width: 100px;
+		width: 90px;
 		height: 100px;
 		font-size: 64px;
 		text-align: center;
 		border-color: green;
-		border-width: 3px;
+		border-width: 5px;
 		background-color: white;
+		font-weight: bold;
 	}
 	
-	h1 {
-		padding-left: 190px;
+	#bingoTable thead td {
+		background-color: green;
 	}
 	
 	button {
@@ -43,9 +44,14 @@
 </style>
 </head>
 <body>
-<h1>BINGO</h1>
 <table id="bingoTable" class="table-bordered">
-
+<thead>
+	<td>B</td>
+	<td>I</td>
+	<td>N</td>
+	<td>G</td>
+	<td>O</td>
+</thead>
 </table>
 <div id="pulledNumber">&nbsp;</div>
 <button onclick="pullRandom()">Pull random number</button>
